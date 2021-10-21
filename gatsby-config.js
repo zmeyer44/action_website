@@ -11,10 +11,6 @@ digital and physical worlds.`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/app/*`] },
-    },
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -92,15 +88,6 @@ digital and physical worlds.`,
           appId: "1:174163519650:web:da7a882e569bc0dd640ffb",
           measurementId: "G-3XGBF07B5J",
         },
-      },
-    },
-    {
-      resolve: `gatsby-source-firestore-easy`,
-      options: {
-        adminCredential: {
-          credential: require("./firestoreCredentials.json"),
-        },
-        collections: [],
       },
     },
   ],
