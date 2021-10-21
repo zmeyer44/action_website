@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import ViralLoops from "viral-loops-react"
 import Fade from "react-reveal/Fade"
 import { Parallax } from "react-scroll-parallax"
 import { WelcomeWrapper, ImagesWrapper } from "./styled.components"
@@ -6,7 +7,14 @@ import { StaticImage } from "gatsby-plugin-image"
 
 import Button from "../../components/Button"
 
-const titleWords = ["Movies", "TV Shows", "Documentaries", "Mini-Series"]
+const titleWords = [
+  "Interviews",
+  "Podcasts",
+  "Articles",
+  "Recipes",
+  "Tutorials",
+  "Deep dives",
+]
 
 const WelcomeContainer = props => {
   const [displayText, setDisplayText] = useState("")
@@ -57,13 +65,14 @@ const WelcomeContainer = props => {
           <Fade bottom cascade duration={600}>
             <span>
               <h1>
-                Save and share your favorite <br />
+                Community-driven, crowdsourced curation for <br />
                 <span className={`${isPaused}`}>{displayText}</span>
               </h1>
             </span>
             <span>
               <span>
-                See what your friends are watching and react to their ratings
+                Whereas most search and discovery are based on algorithms and
+                ads, we base it on who you follow on Discovr.
               </span>
             </span>
             <div className="cta_btns">

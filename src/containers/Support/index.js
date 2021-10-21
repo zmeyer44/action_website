@@ -14,24 +14,24 @@ const faq = {
   text: "Answers for most popular questions",
   options: [
     {
-      title: "What is the Action app?",
-      text: "The Action app allows users to save and share their favorite movies and TV shows. Users can review movies and share their reviews with friends.",
+      title: "What is Discovr?",
+      text: "Discovr is a social discovery platform designed to help you sort through all that is out there and find what you are truly looking for. We're making this experience social, so you can gain a glimpse into what your friends, influencers, and industry experts are doing, using, and consuming.",
     },
     {
       title: "How do I create an account?",
-      text: 'We\'re busy building, so access to the product is quite limited for now. You can join our waitlist to reserve a spot on the Action app and get early access. Joining the waitlist is easy as 1-2-3. Step 1: Click one of the "Join the waitlist!" buttons above. Step 2: Enter your email.  Step 3: Share your unique referral link with friends, colleagues, and coworkers to move up the waitlist and get earlier access.',
+      text: 'We\'re busy building, so access to the product is quite limited for now. You can join our waitlist to reserve a spot on Discovr and get early access. Joining the waitlist is easy as 1-2-3. Step 1: Click one of the "Join the waitlist!" buttons above. Step 2: Enter your email.  Step 3: Share your unique referral link with friends, colleagues, and coworkers to move up the waitlist and get earlier access.',
     },
     {
       title: "Are all posts public?",
-      text: "Nope! Users get to choose whether each review is Public or Private. Public posts are viewable to anyone and are posted to the social feed. Private posts are only viewable by you.",
+      text: "Nope! Users get to choose the whether ach upload to Discovr is Public or Private. Public posts are viewable to anyone and are posted to the social feed. Private posts are only viewable by you.",
     },
     {
       title: "What if I have more questions?",
       text: (
         <span>
           Have another question? Email us at{" "}
-          <a href="mailto: zmmeyer44@gmail.com" className="accent_email">
-            zmmeyer44@gmail.com
+          <a href="mailto: help@joindiscovr.com" className="accent_email">
+            help@joindiscovr.com
           </a>
         </span>
       ),
@@ -136,7 +136,7 @@ const SupportContainer = props => {
             />
           </div>
 
-          <div className="form">
+          {/* <div className="form">
             <Fade bottom cascade duration={600}>
               <span>
                 <h4>{mailer.title}</h4>
@@ -186,7 +186,12 @@ const SupportContainer = props => {
                 </Form>
               </Formik>
             </div>
-          </div>
+          
+          
+
+
+
+          </div> */}
         </div>
       </div>
     </SupportWrapper>

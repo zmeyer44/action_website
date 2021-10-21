@@ -195,7 +195,7 @@ export const SupportWrapper = styled.div`
       }
       .main_section {
         /* REMOVE LATER */
-        /* align-items: center; */
+        align-items: center;
 
         .faq {
           ul {
@@ -219,7 +219,7 @@ export const SupportWrapper = styled.div`
       width: 1100px;
 
       .main_section {
-        flex-direction: row;
+        /* flex-direction: row; */
 
         .form {
           margin-top: 0px;

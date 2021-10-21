@@ -64,7 +64,7 @@ const Header = ({ siteTitle, opaque }) => {
                 marginBottom: 0,
               }}
             >
-              Action App
+              Discovr
             </h1>
           </GatsbyLink>
           <div className="links">
