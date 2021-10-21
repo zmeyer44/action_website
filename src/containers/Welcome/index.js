@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import ViralLoops from "viral-loops-react"
 import Fade from "react-reveal/Fade"
 import { Parallax } from "react-scroll-parallax"
 import { WelcomeWrapper, ImagesWrapper } from "./styled.components"
