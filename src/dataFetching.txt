@@ -1,0 +1,204 @@
+import React, { useState, useEffect } from "react"
+import firebase from "gatsby-plugin-firebase"
+import { graphql, Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
+
+import Layout from "../components/layout"
+import Seo from "../components/seo"
+import Welcome from "../containers/Welcome"
+import Schools from "../containers/Schools"
+import Features from "../containers/Features"
+import Examples from "../containers/Examples"
+import Support from "../containers/Support"
+
+const IndexPage = ({ data }) => {
+  const [liveData, setLiveData] = useState(null)
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("data")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data())
+          setLiveData(doc.data().value)
+        })
+      })
+  }, [])
+
+  return (
+    <Layout style={{ zIndex: 1 }}>
+      <Seo title="Home" />
+      <Welcome />
+      <Schools />
+
+      <Features />
+      <Examples />
+      <h1>Hi people</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h3 style={{ marginRight: "1em", marginBottom: 0 }}>Live Data:</h3>{" "}
+        {liveData ? liveData : "Loading..."}
+      </div>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h3 style={{ marginRight: "1em", marginBottom: 0 }}>Semi-Live Data:</h3>
+        {data.data.value}
+      </div>
+      <p>Welcome to your new Gatsby site.</p>
+      <p>Now go build something great.</p>
+      <StaticImage
+        src="../images/gatsby-astronaut.png"
+        width={300}
+        quality={95}
+        formats={["AUTO", "WEBP", "AVIF"]}
+        alt="A Gatsby astronaut"
+        style={{ marginBottom: `1.45rem` }}
+      />
+      <p>
+        <Link to="/page-2/">Go to page 2</Link> <br />
+        <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
+      </p>
+      <h1>Hi people</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h3 style={{ marginRight: "1em", marginBottom: 0 }}>Live Data:</h3>{" "}
+        {liveData ? liveData : "Loading..."}
+      </div>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h3 style={{ marginRight: "1em", marginBottom: 0 }}>Semi-Live Data:</h3>
+        {data.data.value}
+      </div>
+
+      <Support />
+    </Layout>
+  )
+}
+
+export default IndexPage
+
+export const query = graphql`
+  {
+    data {
+      value
+    }
+  }
+`
+
+
+import { navigate } from "gatsby"
+import React, { useState, useEffect } from "react"
+import * as Yup from "yup"
+import Layout from "../components/layoutMin"
+import Seo from "../components/seo"
+import AuthForm from "../containers/AuthForm"
+import { newPassword, verifyResetCode } from "../functions"
+
+const NewPassword = ({ location }) => {
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [isMessage, setIsMessage] = useState(false)
+  const [code, setCode] = useState("")
+  const [codeError, setCodeError] = useState(false)
+
+  useEffect(() => {
+    console.log("Location: ", location)
+    const params = new URLSearchParams(location.search)
+    const urlCode = params.get("code")
+    setCode(urlCode)
+  }, [location])
+
+  // Validate code
+  useEffect(() => {
+    verifyResetCode(code).then(r => {
+      if (r.error) {
+        setCodeError(true)
+      }
+    })
+  }, [code])
+
+  const navigateHome = () => {
+    navigate("/")
+  }
+
+  const onSubmit = (values, { setSubmitting }) => {
+    setIsSuccess(false)
+    setIsError(false)
+    setIsMessage(false)
+    setSubmitting(true)
+
+    // return newPassword(values).then(r => {
+    //   if (r.error) {
+    //     setIsError(r.error.message)
+    //   } else {
+    //     setIsMessage("Password Changed!")
+    //     setIsSuccess(true)
+    //   }
+    // })
+  }
+
+  const form = {
+    title: "Reset Password",
+    action: "Confirm",
+    isMessage,
+    isSuccess,
+    isError,
+    onSubmit,
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(6, "Password is too short")
+        .required("Required"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords must match")
+        .required("Required"),
+    }),
+    // eslint-disable-next-line no-undef
+
+    fields: [
+      {
+        name: "password",
+        label: "New Password",
+        placeholder: "New Password",
+        type: "password",
+        initialValue: "",
+      },
+      {
+        name: "confirmPassword",
+        label: "Confirm Password",
+        placeholder: "Repeat Password",
+        type: "password",
+        initialValue: "",
+      },
+    ],
+
+    authActions: [
+      { text: "Return Home?", to: "" },
+      { text: "Log In", to: "login" },
+    ],
+  }
+  const invalidCode = {
+    title: "Invalid Link",
+    action: "Return Home",
+    isMessage,
+    isSuccess,
+    isError,
+    onSubmit: () => navigate("/"),
+    validationSchema: "",
+    // eslint-disable-next-line no-undef
+
+    fields: [],
+
+    authActions: [
+      { text: "Return Home?", to: "" },
+      { text: "Log In", to: "login" },
+    ],
+  }
+
+  return (
+    <Layout>
+      <Seo title="Enter New Password" />
+      <AuthForm form={codeError ? invalidCode : form} />
+    </Layout>
+  )
+}
+
+export default NewPassword
